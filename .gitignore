@@ -1,0 +1,75 @@
+# ── Environment & secrets ────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.key
+secrets.json
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# ── Virtual environments ──────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.pyenv-version
+
+# ── Corpus — PDFs and raw downloads never go in git ──────────────────────────
+data/raw/
+data/processed/
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# ── Vector store — ChromaDB persisted data ────────────────────────────────────
+chroma_db/
+*.chroma
+vectorstore/
+
+# ── Model cache ───────────────────────────────────────────────────────────────
+.cache/
+models/
+sentence_transformers/
+huggingface/
+
+# ── Logs & output ─────────────────────────────────────────────────────────────
+logs/
+*.log
+output/
+results/
+*.csv
+!tests/fixtures/*.csv
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Streamlit ─────────────────────────────────────────────────────────────────
+.streamlit/secrets.toml
+
+# ── Jupyter (if used for exploration) ────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── Misc ──────────────────────────────────────────────────────────────────────
+*.tmp
+*.bak
