@@ -13,10 +13,12 @@ Source strategies:
   jpl       — JSON API (GET). https://csr-api.jpl.nasa.gov/records returns a JSON
               list; each record has an Attachment field pointing to a ZIP at
               csr-api.jpl.nasa.gov/attachments?key=<path>. ZIPs contain PDF reports.
-  escies    — SKIPPED (login wall). PDF downloads at escies.org redirect 302 to
-              identity.escies.org SSO login. The radiation list page embeds report
-              metadata as a JS variable, but actual files require authentication.
-              Revisit if ESCIES provides a public API or guest access.
+  escies    — requests + browser User-Agent. The listing page at
+              https://escies.org/labreport/radiationList embeds 186 report records
+              as a JS variable `reports`. Each record has a webDocumentFile.webDocumentFileId
+              field. PDF download URL: https://escies.org/download/webDocumentFile?id=<id>
+              Returns HTTP 200 + application/pdf when using a real browser User-Agent.
+              Using Python's default UA triggers a 302 SSO redirect — no auth required.
 """
 
 import os
@@ -36,7 +38,8 @@ from tqdm import tqdm
 # Resolve paths relative to this script, not cwd
 SCRIPT_DIR = Path(__file__).resolve().parent
 BASE_DIR = SCRIPT_DIR.parent / "data" / "raw"
-USER_AGENT = "Mozilla/5.0 (compatible; RadQuery-Bot/1.0; research)"
+# Full browser UA — required for ESCIES (bot/simple UA triggers 302 SSO redirect)
+USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 RATE_LIMIT_SECS = 1.5
 
 SOURCES = {
@@ -62,7 +65,7 @@ SOURCES = {
         "url": "https://escies.org/labreport/radiationList",
         "credibility_tier": 2,
         "report_source": "ESCIES",
-        "strategy": "login_wall",
+        "strategy": "js_embedded",
     },
 }
 
@@ -245,11 +248,47 @@ def fetch_links_jpl(url, limit):
 
 
 def fetch_links_escies(url, limit):
-    """ESCIES requires login — return empty list."""
-    print("  [Skipped] ESCIES requires SSO login for PDF downloads.")
-    print("  Metadata is public at https://escies.org/labreport/radiationList")
-    print("  but actual PDFs redirect to identity.escies.org login.")
-    return []
+    """Extract PDF download items from ESCIES JS-embedded report metadata.
+
+    The listing page embeds `var reports = [...]` containing report objects.
+    Each with a webDocumentFile has a webDocumentFileId used to download:
+        https://escies.org/download/webDocumentFile?id=<webDocumentFileId>
+    A full browser User-Agent is required; bot UAs trigger a 302 SSO redirect.
+    """
+    try:
+        r = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=20)
+        r.raise_for_status()
+    except Exception as e:
+        print(f"  [Error] ESCIES listing fetch: {e}")
+        return []
+
+    match = re.search(r"var\s+reports\s*=\s*(\[.*?\]);", r.text, re.DOTALL)
+    if not match:
+        print("  [Error] Could not locate 'reports' JS variable in ESCIES page")
+        return []
+
+    reports = json.loads(match.group(1))
+    items = []
+    for rpt in reports:
+        wdf = rpt.get("webDocumentFile")
+        if not wdf:
+            continue
+        if rpt.get("pdfConfidential"):
+            continue
+        file_id = wdf.get("webDocumentFileId")
+        filename = wdf.get("fileName", f"escies_{file_id}.pdf")
+        if not filename.lower().endswith(".pdf"):
+            filename += ".pdf"
+        items.append({
+            "url": f"https://escies.org/download/webDocumentFile?id={file_id}",
+            "filename": filename,
+            "lab_report_number": rpt.get("labReportNumber", ""),
+        })
+        if len(items) >= limit:
+            break
+
+    print(f"  Found {len(items)} downloadable reports (from {len(reports)} total)")
+    return items
 
 
 # ---------------------------------------------------------------------------
@@ -375,10 +414,6 @@ def process_source(skey, limit, manifest, stats):
     strategy = source["strategy"]
     url = source["url"]
 
-    if strategy == "login_wall":
-        fetch_links_escies(url, limit)
-        return
-
     print(f"  Strategy: {strategy}")
 
     # --- Fetch links ---
@@ -421,6 +456,46 @@ def process_source(skey, limit, manifest, stats):
             elif "failed" in status:
                 stats[skey]["failed"] += 1
                 tqdm.write(f"    FAIL: {item['part']} — {status}")
+
+    elif skey == "escies":
+        items = fetch_links_escies(url, limit)
+        for item in tqdm(items, desc=f"  Downloading ({skey})"):
+            stats[skey]["attempted"] += 1
+            pdf_url = item["url"]
+            filename = item["filename"]
+            filepath = BASE_DIR / skey / filename
+            if filepath.exists() and filepath.stat().st_size > 0:
+                stats[skey]["downloaded"] += 1
+                continue
+            try:
+                time.sleep(RATE_LIMIT_SECS)
+                r = requests.get(pdf_url, headers={"User-Agent": USER_AGENT}, stream=True, timeout=30)
+                r.raise_for_status()
+                with open(filepath, "wb") as f:
+                    for chunk in r.iter_content(chunk_size=16384):
+                        f.write(chunk)
+                valid, reason = validate_pdf(filepath)
+                if not valid:
+                    filepath.unlink(missing_ok=True)
+                    stats[skey]["failed"] += 1
+                    tqdm.write(f"    FAIL: {filename} — {reason}")
+                    continue
+                file_size = filepath.stat().st_size
+                manifest.append({
+                    "filename": filename,
+                    "source": skey,
+                    "url": pdf_url,
+                    "download_date": datetime.now().isoformat(),
+                    "file_size_bytes": file_size,
+                    "credibility_tier": SOURCES[skey]["credibility_tier"],
+                    "report_source": SOURCES[skey]["report_source"],
+                    "lab_report_number": item.get("lab_report_number", ""),
+                })
+                stats[skey]["downloaded"] += 1
+            except Exception as e:
+                filepath.unlink(missing_ok=True)
+                stats[skey]["failed"] += 1
+                tqdm.write(f"    FAIL: {filename} — {e}")
 
 
 def main():
