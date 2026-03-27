@@ -1,0 +1,580 @@
+[
+    {
+        "filename": "d050595.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/d050595.pdf",
+        "download_date": "2026-03-24T21:31:52.403276",
+        "file_size_bytes": 142526,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "random6a.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/random6a.pdf",
+        "download_date": "2026-03-24T21:31:54.734743",
+        "file_size_bytes": 548524,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "DRAM296.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/DRAM296.pdf",
+        "download_date": "2026-03-24T21:31:56.951401",
+        "file_size_bytes": 301025,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "i090595.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/i090595.pdf",
+        "download_date": "2026-03-24T21:31:58.969210",
+        "file_size_bytes": 87093,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "Random97a.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/Random97a.pdf",
+        "download_date": "2026-03-24T21:32:01.151392",
+        "file_size_bytes": 270145,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-CP-2019-Topper-NSREC-Paper-TID-SEE-DD-Compendium-NSREC-TN70538.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/docs/tasks/051-Compendium-SEE-TID-DD/NEPP-CP-2019-Topper-NSREC-Paper-TID-SEE-DD-Compendium-NSREC-TN70538.pdf",
+        "download_date": "2026-03-24T21:32:06.617684",
+        "file_size_bytes": 1384971,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "CP-2018-OBryan-NSREC-SEE-DW-Paper-20205001490.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/CP-2018-OBryan-NSREC-SEE-DW-Paper-20205001490.pdf",
+        "download_date": "2026-03-24T21:32:08.826069",
+        "file_size_bytes": 415418,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-CP-2018-Wyrwas-Paper-NSREC-DW-TN67767-NEPPweb-reuse-TN65823.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/files/30458/NEPP-CP-2018-Wyrwas-Paper-NSREC-DW-TN67767-NEPPweb-reuse-TN65823.pdf",
+        "download_date": "2026-03-24T21:32:10.989514",
+        "file_size_bytes": 275511,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-TR-2017-Wyrwas-17-039-GTX1050-2017Apr-TN45745.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/files/28629/NEPP-TR-2017-Wyrwas-17-039-GTX1050-2017Apr-TN45745.pdf",
+        "download_date": "2026-03-24T21:32:13.314546",
+        "file_size_bytes": 627562,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-TR-2018-Wyrwas-TR-17-039-GTX1050-2018May-TN58471.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/files/29573/NEPP-TR-2018-Wyrwas-TR-17-039-GTX1050-2018May-TN58471.pdf",
+        "download_date": "2026-03-24T21:32:15.741618",
+        "file_size_bytes": 1000351,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-TR-2018-Wyrwas-TR-16-015_16-016_DDR2-TID-VdG-2018Dec-TN65272.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/files/29921/NEPP-TR-2018-Wyrwas-TR-16-015_16-016_DDR2-TID-VdG-2018Dec-TN65272.pdf",
+        "download_date": "2026-03-24T21:32:20.404105",
+        "file_size_bytes": 989626,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "PPM-95-167.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/tid/PPM-95-167.pdf",
+        "download_date": "2026-03-24T21:32:22.591547",
+        "file_size_bytes": 248270,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "PPM-95-130.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/tid/PPM-95-130.pdf",
+        "download_date": "2026-03-24T21:32:24.707958",
+        "file_size_bytes": 169790,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "PPM-94-005.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/tid/PPM-94-005.pdf",
+        "download_date": "2026-03-24T21:32:26.963670",
+        "file_size_bytes": 315924,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "nsrec00_W21.pdf",
+        "source": "gsfc_test",
+        "url": "https://nepp.nasa.gov/radhome/papers/nsrec00_W21.pdf",
+        "download_date": "2026-03-24T21:32:29.246677",
+        "file_size_bytes": 450879,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "tns01_noise.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/tns01_noise.pdf",
+        "download_date": "2026-03-24T21:32:34.475169",
+        "file_size_bytes": 394274,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "JEDEC2010_LaBel_ETW_Overview.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/JEDEC2010_LaBel_ETW_Overview.pdf",
+        "download_date": "2026-03-24T21:32:37.487134",
+        "file_size_bytes": 352244,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "tns04_Varad.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/tns04_Varad.pdf",
+        "download_date": "2026-03-24T21:32:44.405618",
+        "file_size_bytes": 3127069,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "Ladbury_TNS2011_PG4_Bayesian_TID.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/Ladbury_TNS2011_PG4_Bayesian_TID.pdf",
+        "download_date": "2026-03-24T21:32:50.082518",
+        "file_size_bytes": 1988809,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "MAFA07_34_Berg.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/mafa/talks/MAFA07_34_Berg.pdf",
+        "download_date": "2026-03-24T21:33:09.549597",
+        "file_size_bytes": 7153862,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "tns04_Marshall.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/tns04_Marshall.pdf",
+        "download_date": "2026-03-24T21:33:13.152578",
+        "file_size_bytes": 2928289,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "tns02_HST.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/tns02_HST.pdf",
+        "download_date": "2026-03-24T21:33:15.402754",
+        "file_size_bytes": 132055,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NSREC2012_Casey_DWposter.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/NSREC2012_Casey_DWposter.pdf",
+        "download_date": "2026-03-24T21:33:17.966630",
+        "file_size_bytes": 775797,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "nsrec00_W22.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/nsrec00_W22.pdf",
+        "download_date": "2026-03-24T21:33:21.196379",
+        "file_size_bytes": 387502,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-CP-2017-Austin-RAMS2017-Paper-CubeSat-Payload-Radiation-Reliability-Assurance-Goal-Structuring-Notation-20205006326.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/docs/tasks/004-Radiation-Physics-Modeling/NEPP-CP-2017-Austin-RAMS2017-Paper-CubeSat-Payload-Radiation-Reliability-Assurance-Goal-Structuring-Notation-20205006326.pdf",
+        "download_date": "2026-03-24T21:33:23.531532",
+        "file_size_bytes": 594560,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-CP-2017-Austin-RAMS2017-Presentation-CubeSat-Payload-Radiation-Reliability-Assurance-Goal-Structuring-Notation-20205006762.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/docs/tasks/004-Radiation-Physics-Modeling/NEPP-CP-2017-Austin-RAMS2017-Presentation-CubeSat-Payload-Radiation-Reliability-Assurance-Goal-Structuring-Notation-20205006762.pdf",
+        "download_date": "2026-03-24T21:33:26.612788",
+        "file_size_bytes": 1038973,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-CP-2018-Casey-Presentation-SEE-MAPLD-TN66187-NEPPweb-reuse-TN56702.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/files/29901/NEPP-CP-2018-Casey-Presentation-SEE-MAPLD-TN66187-NEPPweb-reuse-TN56702.pdf",
+        "download_date": "2026-03-24T21:33:29.112418",
+        "file_size_bytes": 832548,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "GOMAC2003_LaBel_HBD_Validation_pres.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/GOMAC2003_LaBel_HBD_Validation_pres.pdf",
+        "download_date": "2026-03-24T21:33:31.452086",
+        "file_size_bytes": 271217,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-CP-2018-Berg-Presentation-MRQW-TN65832-NEPPweb-reuse-TN52345.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/files/30425/NEPP-CP-2018-Berg-Presentation-MRQW-TN65832-NEPPweb-reuse-TN52345.pdf",
+        "download_date": "2026-03-24T21:33:36.502940",
+        "file_size_bytes": 730088,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-CP-2019-Pellish-ASEC-Presentation-SEE-Autonomous-Vehicles-TN68831.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/docs/tasks/043-Radiation-Coordination/NEPP-CP-2019-Pellish-ASEC-Presentation-SEE-Autonomous-Vehicles-TN68831.pdf",
+        "download_date": "2026-03-24T21:33:41.761400",
+        "file_size_bytes": 1492613,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "W03_BERG_Newly_Developed_Approach.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/workshops/etw2012/talks/Wednesday/W03_BERG_Newly_Developed_Approach.pdf",
+        "download_date": "2026-03-24T21:33:44.807016",
+        "file_size_bytes": 1856427,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "Roadmap_Label.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/Roadmap_Label.pdf",
+        "download_date": "2026-03-24T21:33:47.149657",
+        "file_size_bytes": 243537,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NSREC2012_Wilcox_F4_pres.pdf",
+        "source": "gsfc_pub",
+        "url": "http://nepp.nasa.gov/radhome/papers/NSREC2012_Wilcox_F4_pres.pdf",
+        "download_date": "2026-03-24T21:33:49.801884",
+        "file_size_bytes": 1345183,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "1640%20-%202019-Brusse-NEPP%20ETW-Foil%20Resistor%20Screening-Final.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/workshops/etw2019/talks/0617MON/1640%20-%202019-Brusse-NEPP%20ETW-Foil%20Resistor%20Screening-Final.pdf",
+        "download_date": "2026-03-24T21:33:52.827076",
+        "file_size_bytes": 3587709,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "NEPP-CP-2019-Brusse-CMSE-Presentation-TN65343.pdf",
+        "source": "gsfc_pub",
+        "url": "https://nepp.nasa.gov/docs/tasks/018-Bulk-Metal Foil-Thin-Film-Resistors/NEPP-CP-2019-Brusse-CMSE-Presentation-TN65343.pdf",
+        "download_date": "2026-03-24T21:33:56.564733",
+        "file_size_bytes": 5097446,
+        "credibility_tier": 1,
+        "report_source": "GSFC"
+    },
+    {
+        "filename": "CoverPage.pdf",
+        "source": "jpl",
+        "url": "https://csr-api.jpl.nasa.gov/attachments?key=Production/eb41995b-fa43-48e9-9efa-8087ab8d2b23/ExportFiles.zip",
+        "download_date": "2026-03-24T21:33:59.485571",
+        "file_size_bytes": 51506,
+        "credibility_tier": 1,
+        "report_source": "JPL"
+    },
+    {
+        "filename": "TR000003_1_2019_TR025_REV -_Europa Clipper_Teledyne CHROMA ROIC_SEL SEU SEFI_2019-08 v1.1.pdf",
+        "source": "jpl",
+        "url": "https://csr-api.jpl.nasa.gov/attachments?key=Production/eb41995b-fa43-48e9-9efa-8087ab8d2b23/ExportFiles.zip",
+        "download_date": "2026-03-24T21:33:59.503480",
+        "file_size_bytes": 5094631,
+        "credibility_tier": 1,
+        "report_source": "JPL"
+    },
+    {
+        "filename": "TR000004_1_2019 - TR021_REV - 1N6843_(JANS1N6843)_SEB_2019-08 v1.1.pdf",
+        "source": "jpl",
+        "url": "https://csr-api.jpl.nasa.gov/attachments?key=Production/e0ab5653-8f3f-4224-a39e-2d13e8ac29bd/ExportFiles.zip",
+        "download_date": "2026-03-24T21:34:01.753540",
+        "file_size_bytes": 1488534,
+        "credibility_tier": 1,
+        "report_source": "JPL"
+    },
+    {
+        "filename": "TR000011_1_2019 TR018_REV -DAC5675_(5962-0720401VXC)_TID LDR_2019-05 v1.1.pdf",
+        "source": "jpl",
+        "url": "https://csr-api.jpl.nasa.gov/attachments?key=Production/d8401ac9-4371-4979-a568-736624741070/ExportFiles.zip",
+        "download_date": "2026-03-24T21:34:04.108215",
+        "file_size_bytes": 1678690,
+        "credibility_tier": 1,
+        "report_source": "JPL"
+    },
+    {
+        "filename": "TR000019_10_2019 DAC_DAC SET_SEU_SEFI_output_12072018_AD5370_testreport_B.pdf",
+        "source": "jpl",
+        "url": "https://csr-api.jpl.nasa.gov/attachments?key=Production/65d9ac68-437a-4865-9a0e-b8673da0a639/ExportFiles.zip",
+        "download_date": "2026-03-24T21:34:06.323322",
+        "file_size_bytes": 1724059,
+        "credibility_tier": 1,
+        "report_source": "JPL"
+    },
+    {
+        "filename": "TR002677_96_2022_SEE_TestReport_Final-2.pdf",
+        "source": "jpl",
+        "url": "https://csr-api.jpl.nasa.gov/attachments?key=Production/7d7a3f56-2f01-46be-b1b8-845264f83682/ExportFiles.zip",
+        "download_date": "2026-03-24T21:34:08.594993",
+        "file_size_bytes": 2231807,
+        "credibility_tier": 1,
+        "report_source": "JPL"
+    },
+    {
+        "filename": "TR000020_11_2019 - RTR_ZYNQ_TAM_0919 Final 1.2.pdf",
+        "source": "jpl",
+        "url": "https://csr-api.jpl.nasa.gov/attachments?key=Production/bb8d0fe1-38a8-4108-8f3c-7aca25f60a76/ExportFiles.zip",
+        "download_date": "2026-03-24T21:34:11.499810",
+        "file_size_bytes": 25975197,
+        "credibility_tier": 1,
+        "report_source": "JPL"
+    },
+    {
+        "filename": "ra0513.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=58221",
+        "download_date": "2026-03-26T18:32:54.712568",
+        "file_size_bytes": 1541395,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0513"
+    },
+    {
+        "filename": "ra0550.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=58222",
+        "download_date": "2026-03-26T18:33:02.059456",
+        "file_size_bytes": 1317002,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0550"
+    },
+    {
+        "filename": "ra0551.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=58223",
+        "download_date": "2026-03-26T18:33:09.948053",
+        "file_size_bytes": 2259733,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0551"
+    },
+    {
+        "filename": "ra0552.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=58224",
+        "download_date": "2026-03-26T18:33:15.207412",
+        "file_size_bytes": 944510,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0552"
+    },
+    {
+        "filename": "ra0553.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=58225",
+        "download_date": "2026-03-26T18:33:21.083847",
+        "file_size_bytes": 1388550,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0553"
+    },
+    {
+        "filename": "ra0555.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=58226",
+        "download_date": "2026-03-26T18:33:25.048492",
+        "file_size_bytes": 518778,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0555"
+    },
+    {
+        "filename": "ra0571.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=58230",
+        "download_date": "2026-03-26T18:33:31.771416",
+        "file_size_bytes": 1959098,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0571"
+    },
+    {
+        "filename": "ra0599.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=59506",
+        "download_date": "2026-03-26T18:33:40.654959",
+        "file_size_bytes": 3358517,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0599"
+    },
+    {
+        "filename": "ra0600.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=59511",
+        "download_date": "2026-03-26T18:33:43.841497",
+        "file_size_bytes": 301512,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0600"
+    },
+    {
+        "filename": "ra0603.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=59468",
+        "download_date": "2026-03-26T18:33:54.852029",
+        "file_size_bytes": 6590598,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0603"
+    },
+    {
+        "filename": "ra0604.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=59512",
+        "download_date": "2026-03-26T18:34:02.760432",
+        "file_size_bytes": 2764146,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0604"
+    },
+    {
+        "filename": "ra0606.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=59513",
+        "download_date": "2026-03-26T18:34:06.284291",
+        "file_size_bytes": 606252,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0606"
+    },
+    {
+        "filename": "ra0620.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=60072",
+        "download_date": "2026-03-26T18:34:10.697035",
+        "file_size_bytes": 1125910,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0620"
+    },
+    {
+        "filename": "ra0622.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=60107",
+        "download_date": "2026-03-26T18:34:14.732547",
+        "file_size_bytes": 1097705,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0622"
+    },
+    {
+        "filename": "ra0623.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=60108",
+        "download_date": "2026-03-26T18:34:19.003631",
+        "file_size_bytes": 1069197,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0623"
+    },
+    {
+        "filename": "ra0624.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=60109",
+        "download_date": "2026-03-26T18:34:23.430592",
+        "file_size_bytes": 1103861,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0624"
+    },
+    {
+        "filename": "ra0625.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=60110",
+        "download_date": "2026-03-26T18:34:27.862107",
+        "file_size_bytes": 974627,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0625"
+    },
+    {
+        "filename": "ra0626.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=60111",
+        "download_date": "2026-03-26T18:34:32.375746",
+        "file_size_bytes": 846627,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0626"
+    },
+    {
+        "filename": "ra0627.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=60112",
+        "download_date": "2026-03-26T18:34:36.891010",
+        "file_size_bytes": 1122509,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0627"
+    },
+    {
+        "filename": "ra0628.pdf",
+        "source": "escies",
+        "url": "https://escies.org/download/webDocumentFile?id=60113",
+        "download_date": "2026-03-26T18:34:41.552712",
+        "file_size_bytes": 1091285,
+        "credibility_tier": 2,
+        "report_source": "ESCIES",
+        "lab_report_number": "RA 0628"
+    }
+]

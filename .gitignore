@@ -25,8 +25,13 @@ ENV/
 .pyenv-version
 
 # ── Corpus — PDFs and raw downloads never go in git ──────────────────────────
-data/raw/
+data/raw/**/*.pdf
+data/raw/**/*.txt
+data/raw/**/*.docx
+data/raw/**/*.xlsx
+data/raw/**/*.zip
 data/processed/
+!data/raw/manifest.json
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 
