@@ -61,17 +61,43 @@ PART_NUMBER_PATTERN = re.compile(
     r")\b"
 )
 
-# TID result levels — "50 krad", "100 krad(Si)", "10 Mrad", "500 rad"
+# Whitespace class that includes \n — pdfplumber inserts newlines in multi-column PDFs
+_WS = r"[\s\n]"
+# Optional space between "rad" and "(Si)" or "(SiO2)" — seen as "rad (Si)" in corpus
+_UNIT_SI = r"(?:\s?\(Si(?:O2)?\))?"
+
+# TID result levels — "50 krad", "100 krad(Si)", "10 Mrad", "500 rad", "75\nkRad(Si)"
 TID_RESULT_PATTERN = re.compile(
-    r"(\d+\.?\d*)\s*(krad(?:\(Si\))?|Mrad|rad(?:\(Si\))?)\b",
+    rf"(\d+\.?\d*){_WS}*(krad{_UNIT_SI}|Mrad|rads?{_UNIT_SI})\b",
     re.IGNORECASE,
 )
 
-# Dose rate — "50 rad/s", "10 mrad/s", "0.01 rad(Si)/s"
+# Dose rate — "50 rad/s", "10 mrad/s", "0.01 rad(Si)/s", "0.3 rads (Si)/second",
+#             "2.6\nkrad(Si)/s", "R/s", "rad(SiO2)/s"
 DOSE_RATE_PATTERN = re.compile(
-    r"(\d+\.?\d*)\s*(mrad(?:\(Si\))?/s|krad(?:\(Si\))?/s|rad(?:\(Si\))?/s)",
+    rf"(\d+\.?\d*){_WS}*"                       # numeric value + optional whitespace/newline
+    rf"(~?m?k?rads?{_UNIT_SI}{_WS}*/{_WS}*"     # unit prefix + rad variant + /
+    rf"s(?:ec(?:ond)?)?|R/s)",                    # s, sec, second, or R/s
     re.IGNORECASE,
 )
+
+# Multiline fallback — bare unit "rad(Si)/s" on a line, number on the previous line
+# e.g. table cell: "0.01\n   rad(Si)/s"
+_BARE_RATE_UNIT = re.compile(
+    rf"^{_WS}*(?:m|k)?rads?{_UNIT_SI}{_WS}*/{_WS}*s(?:ec(?:ond)?)?",
+    re.IGNORECASE | re.MULTILINE,
+)
+_PREV_LINE_NUM = re.compile(r"(\d+\.?\d*)\s*$")
+
+# Table-context extraction — detect pages with tabulated dose rate columns
+# Header pattern: "(rads)/s(Si)" or "(rads)(Si)/s" in column headers
+TABLE_DR_HEADER = re.compile(
+    r"\(rads?\)\s*(?:/\s*s\s*)?(?:\(Si\))?\s*(?:/\s*s)?",
+    re.IGNORECASE,
+)
+# Standalone small decimal in table rows (dose rate values in rad/s)
+# Matches values like 0.0035, 0.33, 0.04 — bounded by whitespace or dash
+TABLE_DR_VALUE = re.compile(r"(?<=\s)(\d\.\d{2,5})(?=[\s\-–\n])")
 
 # Test type keywords
 TID_PATTERN = re.compile(r"\bTID\b|total ionizing dose", re.IGNORECASE)
@@ -142,11 +168,18 @@ def _extract_test_type(text: str) -> str | None:
 
 
 def _normalize_dose_rate(value: float, unit: str) -> float:
-    """Normalize dose rate to rad(Si)/s."""
-    unit_lower = unit.lower().split("/")[0]  # e.g. "mrad(si)" or "krad"
-    if unit_lower.startswith("m"):
+    """Normalize dose rate to rad(Si)/s.
+
+    Handles variants: mrad/s, krad/s, rad/s, rads/s, R/s, rad(SiO2)/s, etc.
+    """
+    # Collapse whitespace/newlines and lowercase for matching
+    u = re.sub(r"[\s\n]+", "", unit).lower()
+    if u == "r/s":
+        return value  # Roentgen ≈ rad for our purposes
+    # Extract prefix before "rad"
+    if u.startswith("m"):
         return value / 1000.0
-    if unit_lower.startswith("k"):
+    if u.startswith("k"):
         return value * 1000.0
     return value  # already rad/s
 
@@ -260,7 +293,8 @@ def _extract_part_type_llm(chunk_text: str, part_number: str) -> str | None:
 
 
 def extract_metadata(text: str, source_filename: str = "",
-                     manifest: dict | None = None) -> dict:
+                     manifest: dict | None = None,
+                     table_dose_rate: bool = False) -> dict:
     """Extract domain metadata from a chunk's text.
 
     Returns a dict with all metadata fields. Unextractable fields are None.
@@ -289,13 +323,32 @@ def extract_metadata(text: str, source_filename: str = "",
     # Test type
     meta["test_type"] = _extract_test_type(text)
 
-    # Dose rate
+    # Dose rate — primary pattern
     dr_match = DOSE_RATE_PATTERN.search(text)
     if dr_match:
         raw_val = float(dr_match.group(1))
         raw_unit = dr_match.group(2)
         meta["dose_rate"] = _normalize_dose_rate(raw_val, raw_unit)
         meta["dose_rate_unit"] = "rad(Si)/s"
+    else:
+        # Multiline fallback: bare unit on a line, number on previous line
+        for bare in _BARE_RATE_UNIT.finditer(text):
+            preceding = text[:bare.start()]
+            prev_num = _PREV_LINE_NUM.search(preceding)
+            if prev_num:
+                raw_val = float(prev_num.group(1))
+                raw_unit = bare.group().strip()
+                meta["dose_rate"] = _normalize_dose_rate(raw_val, raw_unit)
+                meta["dose_rate_unit"] = "rad(Si)/s"
+                break
+
+    # Table-context fallback: page has "(rads)/s(Si)" column header
+    # Extract first standalone small decimal as dose rate (already in rad/s)
+    if meta["dose_rate"] is None and table_dose_rate:
+        td_match = TABLE_DR_VALUE.search(text)
+        if td_match:
+            meta["dose_rate"] = float(td_match.group(1))
+            meta["dose_rate_unit"] = "rad(Si)/s"
 
     # Result level — prefer LET for SEE tests, TID krad for TID tests
     let_match = LET_PATTERN.search(text)
@@ -303,16 +356,16 @@ def extract_metadata(text: str, source_filename: str = "",
         meta["result_level"] = float(let_match.group(1))
         meta["result_unit"] = "MeV·cm²/mg"
     else:
-        # Collect positions of dose-rate matches to exclude them
-        dr_positions = {m.start() for m in DOSE_RATE_PATTERN.finditer(text)}
+        # Collect spans of dose-rate matches to exclude from TID results
+        dr_spans = [(m.start(), m.end()) for m in DOSE_RATE_PATTERN.finditer(text)]
         for tid_match in TID_RESULT_PATTERN.finditer(text):
             # Skip if this match overlaps with a dose-rate expression
-            if tid_match.start() in dr_positions:
+            if any(s <= tid_match.start() < e for s, e in dr_spans):
                 continue
-            # Also skip if the text right after the match contains "/s"
+            # Also skip if the text right after the match contains "/s" or "/sec"
             end_pos = tid_match.end()
-            trailing = text[end_pos:end_pos + 5]
-            if re.match(r"(?:\(Si\))?/s", trailing, re.IGNORECASE):
+            trailing = text[end_pos:end_pos + 15]
+            if re.match(r"[\s\n]*(?:\(Si(?:O2)?\))?[\s\n]*/[\s\n]*s", trailing, re.IGNORECASE):
                 continue
             raw_val = float(tid_match.group(1))
             raw_unit = tid_match.group(2)
@@ -389,6 +442,8 @@ def chunk_pages(
 
         source = page["source"]
         page_num = page["page"]
+        # Detect table pages with dose rate columns (e.g. "(rads)/s(Si)")
+        has_table_dr = bool(TABLE_DR_HEADER.search(text))
 
         start = 0
         chunk_index = 0
@@ -396,7 +451,10 @@ def chunk_pages(
             end = start + chunk_size
             chunk_text = text[start:end].strip()
             if chunk_text:
-                meta = extract_metadata(chunk_text, source, manifest)
+                meta = extract_metadata(
+                    chunk_text, source, manifest,
+                    table_dose_rate=has_table_dr,
+                )
                 chunk = {
                     "source": source,
                     "page": page_num,

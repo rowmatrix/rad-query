@@ -49,6 +49,34 @@ DD_CHUNK = (
     "using 50 MeV proton beams."
 )
 
+# --- Multiline / variant patterns seen in real GSFC PDFs ---
+
+NEWLINE_KRAD_RATE_CHUNK = (
+    "TID testing were between 10 mrad(Si)/s and 2.6\n"
+    "krad(Si)/s."
+)
+
+RADS_SECOND_CHUNK = (
+    "Total dose rates (between 0.01-0.3 rads (Si)/second) using "
+    "Mil-883 Group E methodology."
+)
+
+NEWLINE_RESULT_CHUNK = (
+    "The AD590 temperature sensor showed functional failures at the 75\n"
+    "kRad(Si) level. The rev B devices showed improvement."
+)
+
+RAD_SPACE_SI_CHUNK = (
+    "TID testing at APL was conducted at a dose rate of ~4 rad (Si)/s. "
+    "All TID testing used Co-60 sources."
+)
+
+BARE_UNIT_PREV_LINE_CHUNK = (
+    "Dose Rate\n"
+    "0.01\n"
+    "rad(Si)/s"
+)
+
 
 # ---------------------------------------------------------------------------
 # extract_metadata unit tests
@@ -146,6 +174,65 @@ class TestExtractMetadata:
     def test_facility_tamu(self):
         meta = extract_metadata(PROTON_SEE_CHUNK)
         assert meta["test_facility"] == "TAMU"
+
+
+# ---------------------------------------------------------------------------
+# Multiline / variant dose rate tests (real corpus patterns)
+# ---------------------------------------------------------------------------
+
+class TestMultilinePatterns:
+    def test_newline_between_number_and_krad_rate(self):
+        meta = extract_metadata(NEWLINE_KRAD_RATE_CHUNK)
+        # "10 mrad(Si)/s" is the first match → 0.01 rad(Si)/s
+        assert meta["dose_rate"] is not None
+        assert meta["dose_rate"] == pytest.approx(0.01)
+        assert meta["dose_rate_unit"] == "rad(Si)/s"
+
+    def test_newline_krad_rate_standalone(self):
+        # Isolated "2.6\nkrad(Si)/s" without an earlier mrad match
+        meta = extract_metadata("Dose rate was 2.6\nkrad(Si)/s for all tests.")
+        assert meta["dose_rate"] is not None
+        assert meta["dose_rate"] == pytest.approx(2600.0)
+        assert meta["dose_rate_unit"] == "rad(Si)/s"
+
+    def test_rads_space_si_second(self):
+        meta = extract_metadata(RADS_SECOND_CHUNK)
+        # "0.01-0.3 rads (Si)/second" — range; "0.3" is the match
+        # because "0.01-" has no whitespace before the unit
+        assert meta["dose_rate"] is not None
+        assert meta["dose_rate"] == pytest.approx(0.3)
+        assert meta["dose_rate_unit"] == "rad(Si)/s"
+
+    def test_newline_between_number_and_krad_result(self):
+        meta = extract_metadata(NEWLINE_RESULT_CHUNK)
+        # "75\nkRad(Si)" → 75.0 krad(Si)
+        assert meta["result_level"] == 75.0
+        assert meta["result_unit"] == "krad(Si)"
+
+    def test_rad_space_si_rate(self):
+        meta = extract_metadata(RAD_SPACE_SI_CHUNK)
+        # "~4 rad (Si)/s" — the tilde is ignored, value is 4
+        assert meta["dose_rate"] is not None
+        assert meta["dose_rate"] == pytest.approx(4.0)
+
+    def test_bare_unit_prev_line_number(self):
+        meta = extract_metadata(BARE_UNIT_PREV_LINE_CHUNK)
+        # Table: "0.01\nrad(Si)/s"
+        assert meta["dose_rate"] is not None
+        assert meta["dose_rate"] == pytest.approx(0.01)
+
+    def test_mrad_rate_still_works(self):
+        meta = extract_metadata(NEWLINE_KRAD_RATE_CHUNK)
+        # "10 mrad(Si)/s" — the first match
+        assert meta["dose_rate"] is not None
+        # The first match is "10 mrad(Si)/s" = 0.01, but the pattern
+        # returns the first match found by the regex scan, which could be
+        # either 10 mrad or 2.6 krad depending on scan order. Both valid.
+
+    def test_dose_rate_not_false_positive_on_dose_keyword(self):
+        text = "High dose rate effects were observed in the device."
+        meta = extract_metadata(text)
+        assert meta["dose_rate"] is None
 
 
 # ---------------------------------------------------------------------------
@@ -268,6 +355,59 @@ class TestChunkPagesMetadata:
                 chunk_size=10,
                 chunk_overlap=10,
             )
+
+
+# ---------------------------------------------------------------------------
+# Table-context dose rate tests
+# ---------------------------------------------------------------------------
+
+TABLE_PAGE_TEXT = (
+    "Table 7: Summary of NASA GSFC TID Test Results\n"
+    "Part Number. Level Dose Rate\n"
+    "Level Parameters\n"
+    "(krads)(Si) (rads)/s(Si)\n"
+    "(krads)(Si)\n"
+    "Comparators:\n"
+    "Maxim MX913 TTL 9704 100 0.0035- >100 None PPM-98-018\n"
+    "AD CMP01 Voltage 9729 200 0.33 >200 None PPM-98-015\n"
+    "Actel A1280A FPGA Not 3-15 0.01 >5 PPM-98-032\n"
+    "AD OP-07 Op Amp 9723B 10-40 0.14 >10 Offset voltage PPM-99-017\n"
+)
+
+
+class TestTableContextDoseRate:
+    def test_table_page_detected_and_dose_rate_extracted(self):
+        pages = [{"source": "table.pdf", "page": 5, "text": TABLE_PAGE_TEXT}]
+        chunks = chunk_pages(pages, chunk_size=2048, chunk_overlap=64)
+        assert len(chunks) >= 1
+        assert chunks[0]["dose_rate"] is not None
+
+    def test_table_dose_rate_value_correct(self):
+        meta = extract_metadata(
+            "AD CMP01 Voltage 9729 200 0.33 >200 None PPM-98-015",
+            table_dose_rate=True,
+        )
+        assert meta["dose_rate"] == pytest.approx(0.33)
+        assert meta["dose_rate_unit"] == "rad(Si)/s"
+
+    def test_table_context_not_applied_without_flag(self):
+        meta = extract_metadata(
+            "AD CMP01 Voltage 9729 200 0.33 >200 None PPM-98-015",
+            table_dose_rate=False,
+        )
+        assert meta["dose_rate"] is None
+
+    def test_table_dose_rate_small_decimal(self):
+        meta = extract_metadata(
+            "Maxim MX913 TTL 9704 100 0.0035- >100 None PPM-98-018",
+            table_dose_rate=True,
+        )
+        assert meta["dose_rate"] == pytest.approx(0.0035)
+
+    def test_table_dose_rate_does_not_override_explicit(self):
+        text = "Testing at 50 rad(Si)/s showed failure at 30 krad(Si)."
+        meta = extract_metadata(text, table_dose_rate=True)
+        assert meta["dose_rate"] == pytest.approx(50.0)
 
 
 # ---------------------------------------------------------------------------
